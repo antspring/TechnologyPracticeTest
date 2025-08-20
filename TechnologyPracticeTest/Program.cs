@@ -1,4 +1,9 @@
-﻿using TechnologyPracticeTest.Validators.Exceptions;
+﻿using TechnologyPracticeTest.StringModifiers.Implementations;
+using TechnologyPracticeTest.StringModifiers.Interfaces;
+using TechnologyPracticeTest.Validators;
+using TechnologyPracticeTest.Validators.Exceptions;
+using TechnologyPracticeTest.validators.Implementations;
+using TechnologyPracticeTest.validators.Interfaces;
 
 namespace TechnologyPracticeTest;
 
@@ -8,15 +13,35 @@ class Program
     {
         var inputString = Console.ReadLine();
 
-        var stringReverser = new StringReverser();
-
         try
         {
-            Console.WriteLine(stringReverser.Reverse(inputString));
+            var validators = new List<IStringValidator>
+            {
+                new NullStringValidator(),
+                new EnglishAlphabetValidator()
+            };
+
+            var stringValidatorService =
+                new StringValidatorService(validators);
+
+            stringValidatorService.Validate(inputString);
         }
         catch (StringValidationException e)
         {
             Console.WriteLine(e.Message);
+            return;
+        }
+
+
+        var stringModifiers = new List<IStringModifier>
+        {
+            new StringReverser(),
+            new CharacterCounter()
+        };
+
+        foreach (var modifier in stringModifiers)
+        {
+            Console.WriteLine(modifier.Execute(inputString));
         }
     }
 }
