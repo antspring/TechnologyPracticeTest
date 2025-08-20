@@ -1,12 +1,21 @@
+using TechnologyPracticeTest.validators.Implementations;
+using TechnologyPracticeTest.validators.Interfaces;
+
 namespace TechnologyPracticeTest;
 
 public class StringReverser
 {
+    public List<IStringValidator> ValidationList { get; } = new()
+    {
+        new NullStringValidator(),
+        new EnglishAlphabetValidator()
+    };
+
     public string? Reverse(string? input)
     {
-        if (string.IsNullOrEmpty(input))
+        foreach (var validator in ValidationList)
         {
-            return input;
+            validator.Validate(input);
         }
 
         string result;
