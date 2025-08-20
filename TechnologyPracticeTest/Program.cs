@@ -1,5 +1,4 @@
 ﻿using TechnologyPracticeTest.StringModifiers.Implementations;
-using TechnologyPracticeTest.StringModifiers.Interfaces;
 using TechnologyPracticeTest.Validators;
 using TechnologyPracticeTest.Validators.Exceptions;
 using TechnologyPracticeTest.validators.Implementations;
@@ -32,16 +31,14 @@ class Program
             return;
         }
 
+        var stringReverser = new StringReverser();
+        var reversedString = stringReverser.Execute(inputString);
+        Console.WriteLine(reversedString);
 
-        var stringModifiers = new List<IStringModifier>
-        {
-            new StringReverser(),
-            new CharacterCounter()
-        };
+        var characterCounter = new CharacterCounter();
+        Console.WriteLine(characterCounter.Execute(inputString));
 
-        foreach (var modifier in stringModifiers)
-        {
-            Console.WriteLine(modifier.Execute(inputString));
-        }
+        var biggestSubstring = new BiggestSubstring();
+        Console.WriteLine(biggestSubstring.Execute(reversedString));
     }
 }
