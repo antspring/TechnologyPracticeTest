@@ -1,23 +1,16 @@
-using TechnologyPracticeTest.validators.Implementations;
-using TechnologyPracticeTest.validators.Interfaces;
+using TechnologyPracticeTest.StringModifiers.Interfaces;
 
-namespace TechnologyPracticeTest;
+namespace TechnologyPracticeTest.StringModifiers.Implementations;
 
-public class StringReverser
+public class StringReverser : IStringModifier
 {
-    public List<IStringValidator> ValidationList { get; } = new()
+    public string Execute(string input)
     {
-        new NullStringValidator(),
-        new EnglishAlphabetValidator()
-    };
+        return Reverse(input);
+    }
 
-    public string? Reverse(string? input)
+    public string Reverse(string input)
     {
-        foreach (var validator in ValidationList)
-        {
-            validator.Validate(input);
-        }
-
         string result;
 
         if (input.Length % 2 == 0)
