@@ -1,4 +1,7 @@
-﻿namespace TechnologyPracticeTest;
+﻿using TechnologyPracticeTest.Validators.Exceptions;
+
+namespace TechnologyPracticeTest;
+
 class Program
 {
     static void Main(string[] args)
@@ -7,6 +10,13 @@ class Program
 
         var stringReverser = new StringReverser();
 
-        Console.WriteLine(stringReverser.Reverse(inputString));
+        try
+        {
+            Console.WriteLine(stringReverser.Reverse(inputString));
+        }
+        catch (StringValidationException e)
+        {
+            Console.WriteLine(e.Message);
+        }
     }
 }
