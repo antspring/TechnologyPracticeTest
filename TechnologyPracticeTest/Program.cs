@@ -38,16 +38,16 @@ class Program
 
         var characterCounter = new CharacterCounter();
         Console.WriteLine(characterCounter.Execute(inputString));
-
+        
         var biggestSubstring = new BiggestSubstring();
         Console.WriteLine(biggestSubstring.Execute(reversedString));
-
+        
         Console.WriteLine("Выберите способ сортировки:");
         Console.WriteLine("1. Quick Sort");
         Console.WriteLine("2. Tree Sort");
-
+        
         var choice = Console.ReadLine();
-
+        
         switch (choice)
         {
             case "1":
@@ -68,5 +68,8 @@ class Program
                 Console.WriteLine("Неверный выбор сортировки.");
                 break;
         }
+        
+        var randomCharRemover = new RandomCharRemover();
+        Console.WriteLine(randomCharRemover.Execute(reversedString));
     }
 }
