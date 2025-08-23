@@ -7,6 +7,7 @@ public class ModifyStringRequest
 {
     [Required]
     [EnglishAlphabetValidator]
+    [BlackListValidator]
     public string Input { get; set; }
     
     [Required]
