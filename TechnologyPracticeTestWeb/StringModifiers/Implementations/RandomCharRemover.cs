@@ -5,6 +5,13 @@ namespace TechnologyPracticeTestWeb.StringModifiers.Implementations;
 
 public class RandomCharRemover : IStringModifier
 {
+    private readonly string _baseApiUrl;
+
+    public RandomCharRemover(string baseApiUrl)
+    {
+        _baseApiUrl = baseApiUrl;
+    }
+
     public string Execute(string input)
     {
         var randomIndex = GetRandomIndexAsync(input.Length).GetAwaiter().GetResult();
@@ -14,7 +21,7 @@ public class RandomCharRemover : IStringModifier
 
     private async Task<int> GetRandomIndexAsync(int stringLength)
     {
-        using var client = new HttpClient { BaseAddress = new Uri("http://www.randomnumberapi.com/api/v1.0") };
+        using var client = new HttpClient { BaseAddress = new Uri(_baseApiUrl) };
 
         var response = await client.GetAsync($"/api/v1.0/randomnumber?max={stringLength - 1}");
 

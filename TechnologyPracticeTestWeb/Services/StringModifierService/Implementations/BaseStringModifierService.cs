@@ -7,6 +7,13 @@ namespace TechnologyPracticeTestWeb.Services.StringModifierService.Implementatio
 
 public class BaseStringModifierService : IStringModifierService
 {
+    private readonly IConfiguration _configuration;
+
+    public BaseStringModifierService(IConfiguration configuration)
+    {
+        _configuration = configuration;
+    }
+
     public Dictionary<string, string> Modify(ModifyStringRequest request)
     {
         var reversedString = new StringReverser().Execute(request.Input);
@@ -18,7 +25,7 @@ public class BaseStringModifierService : IStringModifierService
             { "characters", new CharacterCounter().Execute(reversedString) },
             { "substring", new BiggestSubstring().Execute(reversedString) },
             { "sorted", sortedString },
-            { "truncated", new RandomCharRemover().Execute(reversedString) }
+            { "truncated", new RandomCharRemover(_configuration.GetValue<string>("RandomApi")).Execute(reversedString) }
         };
     }
 
