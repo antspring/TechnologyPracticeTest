@@ -1,3 +1,4 @@
+using TechnologyPracticeTestWeb.Middlewares;
 using TechnologyPracticeTestWeb.Services.StringModifierService.Implementations;
 using TechnologyPracticeTestWeb.Services.StringModifierService.Interfaces;
 
@@ -17,6 +18,8 @@ public class Program
         builder.Services.AddSwaggerGen();
         builder.Services.AddSingleton<IStringModifierService, BaseStringModifierService>();
 
+        var concurrencyLimit = builder.Configuration.GetValue("ConcurrencyLimit:MaxConcurrentRequests", 100);
+
         var app = builder.Build();
 
         // Configure the HTTP request pipeline.
@@ -25,7 +28,9 @@ public class Program
             app.UseSwagger();
             app.UseSwaggerUI();
         }
-        
+
+        app.UseMiddleware<ConcurrencyLimitMiddleware>(concurrencyLimit);
+
         app.MapControllers();
 
         app.Run();
